@@ -1,0 +1,33 @@
+# mise — Cloudflare Pages configuration
+#
+# Binding names are locked by the kickoff doc. Do not rename DB or MEDIA,
+# and do not rename mise-db or mise-media.
+
+name = "mise"
+compatibility_date = "2026-09-01"
+pages_build_output_dir = "dist"
+
+# D1 — binding name DB, database name mise-db
+#
+# database_id is a placeholder. Fill it in after running:
+#   wrangler d1 create mise-db
+# The command prints the id; paste it below. Until then, --remote commands
+# will fail. Local development (--local) works without it.
+[[d1_databases]]
+binding = "DB"
+database_name = "mise-db"
+database_id = "REPLACE_ME_AFTER_WRANGLER_D1_CREATE"
+
+# R2 — binding name MEDIA, bucket name mise-media
+#
+# Nothing in Session 1 writes to R2. The binding is declared now because the
+# kickoff doc says to put it in wrangler.toml in Session 1 and never rename it.
+# Create the bucket with:
+#   wrangler r2 bucket create mise-media
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "mise-media"
+
+# ANTHROPIC_API_KEY is NOT declared here. It is a secret, not a var, and it is
+# not needed until Session 2. Set it then with:
+#   wrangler pages secret put ANTHROPIC_API_KEY

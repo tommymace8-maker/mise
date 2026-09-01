@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-ground text-ink font-sans antialiased;
+  }
+
+  /* Inputs inherit the ground rather than sitting in white boxes. */
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+@layer components {
+  /*
+   * Inferred fields (spec §3c) must be distinguishable without relying on
+   * color: dotted underline plus ink-soft, with the mode accent on tap to
+   * correct. Nothing in Session 1 sets inferred: true — manual entry is
+   * always authored — but the token belongs with the type system.
+   */
+  .inferred {
+    @apply text-ink-soft underline decoration-dotted decoration-from-font underline-offset-4;
+  }
+
+  .inferred:active {
+    @apply text-ink;
+  }
+
+  /* Field label. Sentence case, never all-caps eyebrows. */
+  .field-label {
+    @apply block text-sm font-medium text-ink-soft mb-1.5;
+  }
+
+  .field {
+    @apply w-full bg-ground-deep border-0 border-b-2 border-ink/20 px-3 py-2
+           text-ink placeholder:text-ink-soft/60
+           focus:outline-none focus:border-ink;
+  }
+
+  /* Buttons keep their name through the whole flow. No appended arrows. */
+  .btn {
+    @apply px-4 py-2 font-medium transition-colors duration-tap;
+  }
+
+  .btn-primary {
+    @apply btn bg-ink text-ground active:bg-ink-soft;
+  }
+
+  .btn-quiet {
+    @apply btn bg-ground-deep text-ink active:bg-ink/15;
+  }
+}
