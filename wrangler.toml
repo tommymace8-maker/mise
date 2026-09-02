@@ -16,7 +16,7 @@ pages_build_output_dir = "dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "mise-db"
-database_id = "REPLACE_ME_AFTER_WRANGLER_D1_CREATE"
+database_id = "46c71762-ee51-4999-8d72-2f9fbd818290"
 
 # R2 — binding name MEDIA, bucket name mise-media
 #
