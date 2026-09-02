@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ModeFilter, type ModeFilterValue } from "./components/ModeFilter";
+import { RecipeDetail } from "./components/RecipeDetail";
 import { RecipeForm } from "./components/RecipeForm";
 import { RecipeList } from "./components/RecipeList";
 import { createRecipe, listRecipes } from "./lib/api";
@@ -11,6 +12,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<ModeFilterValue>("all");
   const [adding, setAdding] = useState(false);
+  const [selected, setSelected] = useState<Recipe | null>(null);
 
   // The list is small enough at this stage to hold whole and filter in memory.
   // The API takes ?mode= as well; that is what later sessions will use once
@@ -58,7 +60,9 @@ export default function App() {
           <p className="mt-1 text-ink-soft">Everything worth cooking twice.</p>
         </header>
 
-        {adding ? (
+        {selected !== null ? (
+          <RecipeDetail recipe={selected} onBack={() => setSelected(null)} />
+        ) : adding ? (
           <section aria-label="Add a recipe">
             <h2 className="font-serif text-2xl mb-6">Add a recipe</h2>
             <RecipeForm
@@ -89,6 +93,7 @@ export default function App() {
               error={error}
               filtered={filter !== "all" && recipes.length > 0}
               onAdd={() => setAdding(true)}
+              onSelect={setSelected}
             />
           </section>
         )}

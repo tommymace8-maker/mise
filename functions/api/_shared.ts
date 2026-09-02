@@ -5,8 +5,8 @@
  */
 export interface Env {
   DB: D1Database;
-  /** Unused in Session 1. Declared because the binding is locked. */
   MEDIA: R2Bucket;
+  ANTHROPIC_API_KEY: string;
 }
 
 export function json(data: unknown, status = 200): Response {

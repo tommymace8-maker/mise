@@ -8,6 +8,7 @@ interface Props {
   /** Empty because nothing is saved at all, vs. empty because of the filter. */
   filtered: boolean;
   onAdd: () => void;
+  onSelect: (recipe: Recipe) => void;
 }
 
 function timing(recipe: Recipe): string | null {
@@ -16,7 +17,7 @@ function timing(recipe: Recipe): string | null {
   return null;
 }
 
-function RecipeCard({ recipe }: { recipe: Recipe }) {
+function RecipeCard({ recipe, onClick }: { recipe: Recipe; onClick: () => void }) {
   const accent = MODE_ACCENT[recipe.mode];
 
   // Metadata is laid out with space, not joined with middle dots.
@@ -40,7 +41,13 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
   }
 
   return (
-    <article className={`border-l-3 ${accent.border} bg-ground-deep px-5 py-4`}>
+    <article
+      className={`border-l-3 ${accent.border} bg-ground-deep px-5 py-4 cursor-pointer active:opacity-80`}
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && onClick()}
+    >
       {/* Mode label always travels with the accent — never color alone. */}
       <p className={`${accent.text} text-sm font-medium mb-1`}>
         {MODE_LABEL[recipe.mode]}
@@ -86,7 +93,7 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
   );
 }
 
-export function RecipeList({ recipes, loading, error, filtered, onAdd }: Props) {
+export function RecipeList({ recipes, loading, error, filtered, onAdd, onSelect }: Props) {
   if (loading) {
     return <p className="text-ink-soft">Loading your recipes.</p>;
   }
@@ -122,7 +129,7 @@ export function RecipeList({ recipes, loading, error, filtered, onAdd }: Props) 
   return (
     <div className="space-y-4">
       {recipes.map((recipe) => (
-        <RecipeCard key={recipe.id} recipe={recipe} />
+        <RecipeCard key={recipe.id} recipe={recipe} onClick={() => onSelect(recipe)} />
       ))}
     </div>
   );
