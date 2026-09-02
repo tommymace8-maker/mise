@@ -31,3 +31,4 @@ bucket_name = "mise-media"
 # ANTHROPIC_API_KEY is NOT declared here. It is a secret, not a var, and it is
 # not needed until Session 2. Set it then with:
 #   wrangler pages secret put ANTHROPIC_API_KEY
+#redeploy
